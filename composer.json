@@ -1,5 +1,6 @@
 {
     "name": "greymich/php-totp",
+    "version": "1.0.0",
     "description": "PHP TOTP implementation for rfc6238 ",
     "keywords": ["composer", "php", "totp", "one time password"],
     "license": "MIT",
