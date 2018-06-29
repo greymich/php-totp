@@ -1,5 +1,5 @@
 {
-    "name": "greymich/php-totp",
+    "name": "sunnyvision/php-totp",
     "version": "1.0.0",
     "description": "PHP TOTP implementation for rfc6238 ",
     "keywords": ["composer", "php", "totp", "one time password"],
@@ -8,7 +8,11 @@
         {
             "name": "Michael Tam",
             "email": "h.y.michael@icloud.com"
-        }
+        },
+	{
+	    "name": "Michael Tam",
+	    "email": "michael@sunnyvision.com"
+	}
     ],
     "scripts": {
         "test": "phpunit --testdox --configuration phpunit.xml"
