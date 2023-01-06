@@ -40,14 +40,34 @@ class TOTPTest extends TestCase
    **/
   public function testShouldGenerateTotpWithSha1()
   {
-    $sharedSecret = Greymich\TOTP\TOTP::base32Encode("12345678901234567890");
-    $otp = new Greymich\TOTP\TOTP($sharedSecret);
-    $this->assertEquals($otp->get(8, 30, null, 59), "94287082");
-    $this->assertEquals($otp->get(8, 30, null, 1111111109), "07081804");
-    $this->assertEquals($otp->get(8, 30, null, 1111111111), "14050471");
-    $this->assertEquals($otp->get(8, 30, null, 1234567890), "89005924");
-    $this->assertEquals($otp->get(8, 30, null, 2000000000), "69279037");
-    $this->assertEquals($otp->get(8, 30, null, 20000000000), "65353130");
+    $sharedSecretSha1 = Greymich\TOTP\TOTP::base32Encode('12345678901234567890'); // GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ
+    $sharedSecretSha256 = Greymich\TOTP\TOTP::base32Encode('12345678901234567890123456789012'); // GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQGEZA====
+    $sharedSecretSha512 = Greymich\TOTP\TOTP::base32Encode('1234567890123456789012345678901234567890123456789012345678901234'); // GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQGEZDGNA=
+    $otp = new Greymich\TOTP\TOTP($sharedSecretSha1);
+    $otp->setAlgorithm('sha1');
+    $this->assertEquals($otp->get(8, 30, null, 59), '94287082');
+    $this->assertEquals($otp->get(8, 30, null, 1111111109), '07081804');
+    $this->assertEquals($otp->get(8, 30, null, 1111111111), '14050471');
+    $this->assertEquals($otp->get(8, 30, null, 1234567890), '89005924');
+    $this->assertEquals($otp->get(8, 30, null, 20000000000), '65353130');
+    $this->assertEquals($otp->get(8, 30, null, 2000000000), '69279037');
+    $otp = new Greymich\TOTP\TOTP($sharedSecretSha256);
+    $otp->setAlgorithm('sha256');
+    $this->assertEquals($otp->get(8, 30, null, 59), '46119246');
+    $this->assertEquals($otp->get(8, 30, null, 1111111109), '68084774');
+    $this->assertEquals($otp->get(8, 30, null, 1111111111), '67062674');
+    $this->assertEquals($otp->get(8, 30, null, 1234567890), '91819424');
+    $this->assertEquals($otp->get(8, 30, null, 20000000000), '77737706');
+    $this->assertEquals($otp->get(8, 30, null, 2000000000), '90698825');
+    $otp = new Greymich\TOTP\TOTP($sharedSecretSha512);
+    $otp->setAlgorithm('sha512');
+    $this->assertEquals($otp->get(8, 30, null, 59), '90693936');
+    $this->assertEquals($otp->get(8, 30, null, 1111111109), '25091201');
+    $this->assertEquals($otp->get(8, 30, null, 1111111111), '99943326');
+    $this->assertEquals($otp->get(8, 30, null, 1234567890), '93441116');
+    $this->assertEquals($otp->get(8, 30, null, 20000000000), '47863826');
+    $this->assertEquals($otp->get(8, 30, null, 2000000000), '38618901');
+
   }
 
   /**
